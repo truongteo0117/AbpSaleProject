@@ -1,0 +1,83 @@
+﻿@page
+@using Microsoft.Extensions.Localization
+@using Acme.SaleProject.Localization
+@using Volo.Abp.AspNetCore.Mvc.UI.Bootstrap.TagHelpers.Modal
+@using Acme.SaleProject.Web.Pages.Customers
+
+@model OrderModel
+@inject IStringLocalizer<SaleProjectResource> L
+@{
+    Layout = null;
+}
+
+<abp-modal>
+    <abp-modal-header title="@Model.CustomerName"></abp-modal-header>
+    <abp-modal-body>
+        <form method="POST" enctype="multipart/form-data" asp-page-handler="HandleData">
+            <abp-input asp-for="Id" />
+            <div class="mb-3">
+                <label for="product" class="form-label">Product:</label>
+                <select asp-for="SelectedItemId" asp-items="Model.DropdownList" class="form-control"></select>
+            </div>
+            <input type="hidden" asp-for="TextSelect" />
+            <div class="mb-3">
+                <label for="description" class="form-label">Description:</label>
+                <input type="text" id="description" name="Description" value="@Model.Description" class="form-control valid" />
+            </div>
+            <div class="mb-3">
+                <label for="amount">Price:</label>
+                <input type="text" id="price" name="Price" value="@Model.Price" class="form-control valid" readonly />
+            </div>
+            <div class="mb-3">
+                <label for="quantity">Quantity:</label>
+                <input type="number" id="quantity" name="Quantity" min="1" value="1" class="form-control valid" />
+            </div>
+            <div class="mb-3">
+                <label for="totalAmout">Total Amount ($):</label>
+                <input type="text" id="totalAmount" name="TotalAmount" value="@Model.TotalAmout" class="form-control valid" readonly />
+            </div>
+            <div class="mb-3" style="text-align: center">
+                <abp-button button-type="Primary" type="Submit">Submit</abp-button>
+            </div>
+        </form>
+    </abp-modal-body>
+</abp-modal>
+<script>
+    $(document).ready(function () {
+        var quantityInput = document.getElementById('quantity');
+        var priceInput = document.getElementById('price');
+        var totalAmountInput = document.getElementById('totalAmount');
+        var productPrice = document.getElementById("SelectedItemId").value;
+
+        //Set price and total amount
+        priceInput.value = productPrice;
+        updateTotalAmount();
+
+        document.getElementById("SelectedItemId").addEventListener("change", function () {
+            var productPrice = document.getElementById("SelectedItemId").value;
+            document.getElementById("price").value = productPrice;
+
+            var selectElement = document.getElementById("SelectedItemId");
+            var selectedOption = selectElement.options[selectElement.selectedIndex];
+            document.getElementById("TextSelect").value = selectedOption.text;
+        });
+
+
+
+        quantityInput.addEventListener('input', function () {
+            updateTotalAmount();
+        });
+
+        priceInput.addEventListener('input', function () {
+            updateTotalAmount();
+        });
+
+        function updateTotalAmount() {
+            var quantity = parseFloat(quantityInput.value);
+            var price = parseFloat(priceInput.value);
+            var totalAmount = quantity * price;
+
+            totalAmountInput.value = totalAmount.toFixed(2);;
+        }
+    });
+</script>

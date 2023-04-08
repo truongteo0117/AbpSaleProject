@@ -1,0 +1,22 @@
+﻿@page
+@using Acme.SaleProject.Localization
+@using Acme.SaleProject.Web.Pages.Customers
+@using Microsoft.Extensions.Localization
+@model HistoryModel
+@inject IStringLocalizer<SaleProjectResource> L
+@section scripts
+{
+    <abp-script src="/Pages/Customers/History.js" />
+}
+<abp-card>
+    <abp-card-header>
+        <abp-row>
+            <abp-column size-md="_6">
+                <abp-card-title>Order history</abp-card-title>
+            </abp-column>
+        </abp-row>
+    </abp-card-header>
+    <abp-card-body>
+        <abp-table striped-rows="true" id="HistoryTable"></abp-table>
+    </abp-card-body>
+</abp-card>

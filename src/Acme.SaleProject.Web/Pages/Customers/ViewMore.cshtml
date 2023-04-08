@@ -1,0 +1,76 @@
+﻿@page
+@using Microsoft.Extensions.Localization
+@using Acme.SaleProject.Localization
+@using Volo.Abp.AspNetCore.Mvc.UI.Bootstrap.TagHelpers.Modal
+@using Acme.SaleProject.Web.Pages.Customers
+
+@model ViewMoreModel
+@inject IStringLocalizer<SaleProjectResource> L
+@{
+    Layout = null;
+}
+<style>
+    .container {
+        display: flex;
+        flex-wrap: wrap;
+    }
+
+    .item {
+        flex-basis: 50%;
+        padding: 10px;
+        box-sizing: border-box;
+        font-weight: bold;
+        color: black;
+    }
+
+    .itemChild {
+        flex-basis: 50%;
+        padding: 10px;
+        box-sizing: border-box;
+        color: #333;
+    }
+
+    .container div
+    {
+        border-bottom: 1px solid gray;
+    }
+
+</style>
+<abp-modal>
+    <abp-modal-header title="@L["ViewMore"].Value"></abp-modal-header>
+    <abp-modal-body>
+        <abp-input asp-for="Id" />
+        <div class="container">
+            <div class="item">Name</div>
+            <div class="itemChild">@Model.historyDto.Name</div>
+
+            <div class="item">Product Name</div>
+            <div class="itemChild">@Model.historyDto.ProductName</div>
+
+            <div class="item">Price</div>
+            <div class="itemChild">@Model.historyDto.Price $</div>
+
+            <div class="item">Description</div>
+            <div class="itemChild">@Model.historyDto.Description</div>
+
+            <div class="item">Quantity</div>
+            <div class="itemChild">@Model.historyDto.Quantity</div>
+
+            <div class="item">Total Amount</div>
+            <div class="itemChild">@Model.historyDto.TotalAmount $</div>
+
+            <div class="item">Number Phone</div>
+            <div class="itemChild">@Model.historyDto.NumberPhone</div>
+
+            <div class="item">Status</div>
+            <div class="itemChild">@Model.historyDto.Status</div>
+
+            <div class="item">Process By</div>
+            <div class="itemChild">@Model.historyDto.ProcessBy</div>
+
+            <div class="item">Process Date</div>
+            <div class="itemChild">@Model.historyDto.ProcessDate</div>
+        </div>
+    </abp-modal-body>
+    <abp-modal-footer buttons="@AbpModalButtons.Cancel"></abp-modal-footer>
+</abp-modal>

@@ -1,0 +1,20 @@
+﻿@page
+@using Microsoft.Extensions.Localization
+@using Acme.SaleProject.Localization
+@using Volo.Abp.AspNetCore.Mvc.UI.Bootstrap.TagHelpers.Modal
+@using Acme.SaleProject.Web.Pages.Customers
+
+@model ExcelModalModel
+@inject IStringLocalizer<SaleProjectResource> L
+@{
+    Layout = null;
+}
+<abp-modal>
+    <abp-modal-header title="@L["ImportExcel"].Value"></abp-modal-header>
+    <abp-modal-body>
+        <form method="POST" enctype="multipart/form-data" asp-page-handler="Import">
+            <input type="file" name="excel" />
+            <abp-button button-type="Primary" type="Submit">Import Data</abp-button>
+        </form>
+    </abp-modal-body>
+</abp-modal>
